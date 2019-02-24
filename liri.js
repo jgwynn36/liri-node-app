@@ -1,31 +1,37 @@
 require("dotenv").config();
 
+//Modules - npm install 
 const moment = require("moment");
 const axios = require("axios");
 const fs = require("fs");
 
+//
 const keys = require("./keys");
 
+//Spotify
 const Spotify = require("node-spotify-api");
 const spotify = new Spotify(keys.spotify);
-const type = process.argv[2];
-const artist = process.argv.slice(3).join(' ');
-const input = process.argv.slice(4).join(' ');
-const song = process.argv.slice(5).join(' ');
-const divider = "\n------------------------------------------------------------\n";
-// const dataInput = dataArray[1];
-// const dataArray = data.split(',');
 
-const liri = function (type, artist) {
+//User Input 
+const type = process.argv[2];
+//const artist = process.argv.slice(3).join(' ');
+const input = process.argv.slice(3).join(' ');
+//const song = process.argv.slice(5).join(' ');
+
+// Variables
+const divider = "\n------------------------------------------------------------\n";
+let songData;
+
+const liri = function (type, input) {
     switch (type) {
         case "concertList":
-            concertList(artist);
+            concertList(input);
             break;
         case "songInfo":
-            songInfo(song);
+            songInfo(input);
             break;
         case "movieInfo":
-            movieInfo(movie);
+            movieInfo(input);
             break;
         case "random":
             //code block
@@ -35,15 +41,14 @@ const liri = function (type, artist) {
     }
 }
 
-const concertList = function (artist) {
-    console.log(artist)
-    console.log('concertList')
+const concertList = function (input) {
+    console.log("Searching for Concerts with the criteria of " + input); 
 
-    const URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+    const URL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
     axios.get(URL).then(function (response) {
         const jsonData = response.data;
 
-        console.log(JSON.stringify(jsonData, null, 2));
+        //console.log(JSON.stringify(jsonData, null, 2)); Console Log for debugging 
 
         for (let i = 0; i < jsonData.length; i++) {
             jsonData.forEach(element => {
@@ -52,7 +57,9 @@ const concertList = function (artist) {
                 console.log("Concert Date: " + moment(jsonData[i].datetime).format('MM/DD/YYYY'));
                 console.log(divider);
 
-                fs.appendFile('log.txt', songData, function (error) {
+                const concertData = `\nUsed artist information to find:  \nVenue: ${jsonData[i].venue.name} \nVenue Location: ${jsonData[i].venue.country} \nConcert Date: ${moment(jsonData[i].datetime).format('MM/DD/YYYY')} \n---------------------------------`
+
+                fs.appendFile('log.txt', concertData, function (error) {
                     if (error) throw error;
                 });
 
@@ -97,26 +104,29 @@ const movieInfo = function (movie) {
     } else {
         movie = input;
     }
-    const URL = "http://www.omdbapi.com/?apikey=trilogy&" + movie;
+    const URL = "http://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
 
     axios.get(URL).then(function (response) {
         const jsonData = response.data;
 
-        console.log(JSON.stringify(jsonData, null, 2));
-        for (let i = 0; i < jsonData.length; i++) {
-            jsonData.forEach(element => {
-                console.log("Title of the Movie: " + jsonData[i].venue.name);
-                console.log("Venue Location: " + jsonData[i].venue.country);
-                console.log("Concert Date: " + moment(jsonData[i].datetime).format('MM/DD/YYYY'));
-                console.log(divider);
+        //console.log(JSON.stringify(jsonData, null, 2)); Console log response for debugging 
 
-                fs.appendFile('log.txt', songData, function (error) {
-                    if (error) throw error;
-                });
+        console.log("Title of the Movie: " + jsonData.Title);
+        console.log("Release Year: " + jsonData.Year);
+        console.log("IMDB Rating: " + jsonData.imdbRating);
+        console.log("Rotten Tomatoes Rating: " + jsonData.Ratings[1].Value);
+        console.log("Country: " + jsonData.Country);
+        console.log("Language: " + jsonData.Language);
+        console.log("Plot: " + jsonData.Plot);
+        console.log("Actors: " + jsonData.Actors);
+        console.log(divider);
 
-            });
-        }
+        const movieData = `\nUsed movie information to find:  \nTitle of the Movie:: ${jsonData.Title} \nRelease Year: ${jsonData.Year} \nIMDB Rating: ${jsonData.imdbRating} \nRotten Tomatoes Rating: {$jsonData.Ratings[1].Value} \nCountry: ${jsonData.Country} \nLanguage: ${jsonData.Language} \nPlot: ${jsonData.Plot} \nActors: ${jsonData.Actors} \n---------------------------------`
+
+        fs.appendFile('log.txt', movieData, function (error) {
+            if (error) throw error;
+        });
     });
 }
 
-liri(type, artist, song);
+liri(type, input);
