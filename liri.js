@@ -48,7 +48,7 @@ const concertList = function (input) {
     axios.get(URL).then(function (response) {
         const jsonData = response.data;
 
-        //console.log(JSON.stringify(jsonData, null, 2)); Console Log for debugging 
+        //console.log(JSON.stringify(jsonData, null, 2)); Console Log Response for debugging 
 
         for (let i = 0; i < jsonData.length; i++) {
             jsonData.forEach(element => {
@@ -69,8 +69,8 @@ const concertList = function (input) {
 }
 
 const songInfo = function (song) {
-    console.log('Searching for your song...');
-    if (song === undefined) {
+    console.log('Searching for your song...' + song) ;
+    if (song === null) {
         song = 'The Sign'
     } else {
         song = input;
@@ -88,7 +88,7 @@ const songInfo = function (song) {
                 console.log(`Album: ${data.tracks.items[0].album.name}`);
                 console.log(divider);
 
-                const songData = `\nUsed songInfo to find:  \nArtist: ${data.tracks.items[0].artist[0].name} \nSong Name: ${data.tracks.items[0].name} \nSpotify Preview Link: ${data.tracks.items[0].external_urls.spotify} n\Album: {$data.tracks.items[0].album.name}n\---------------------------------`
+                const songData = `\nUsed songInfo to find:  \nArtist: ${data.tracks.items[0].artist[0].name} \nSong Name: ${data.tracks.items[0].name} \nSpotify Preview Link: ${data.tracks.items[0].external_urls.spotify} \nAlbum: {$data.tracks.items[0].album.name}\n---------------------------------`
 
                 fs.appendFile('log.txt', songData, function (error) {
                     if (error) throw error;
@@ -98,8 +98,8 @@ const songInfo = function (song) {
 }
 
 const movieInfo = function (movie) {
-    console.log("Searching for your movie ....");
-    if (movie === undefined) {
+    console.log("Searching for your movie ...." + movie);
+    if (movie === null) {
         movie = 'Mr. Nobody'
     } else {
         movie = input;
