@@ -14,13 +14,10 @@ const spotify = new Spotify(keys.spotify);
 
 //User Input 
 const type = process.argv[2];
-//const artist = process.argv.slice(3).join(' ');
 const input = process.argv.slice(3).join(' ');
-//const song = process.argv.slice(5).join(' ');
 
 // Variables
 const divider = "\n------------------------------------------------------------\n";
-let songData;
 
 const liri = function (type, input) {
     switch (type) {
@@ -33,23 +30,18 @@ const liri = function (type, input) {
         case "movieInfo":
             movieInfo(input);
             break;
-        case "random":
-            //code block
-            break;
         default:
             console.log("Sorry something went wrong with your search!!");
     }
-}
+};
 
 const concertList = function (input) {
-    console.log("Searching for Concerts with the criteria of " + input); 
+    console.log("Searching for Concerts with the criteria of " + input);
 
     const URL = "https://rest.bandsintown.com/artists/" + input + "/events?app_id=codingbootcamp";
     axios.get(URL).then(function (response) {
         const jsonData = response.data;
-
         //console.log(JSON.stringify(jsonData, null, 2)); Console Log Response for debugging 
-
         for (let i = 0; i < jsonData.length; i++) {
             jsonData.forEach(element => {
                 console.log("Venue Name: " + jsonData[i].venue.name);
@@ -62,16 +54,15 @@ const concertList = function (input) {
                 fs.appendFile('log.txt', concertData, function (error) {
                     if (error) throw error;
                 });
-
             });
         }
     });
 }
 
 const songInfo = function (song) {
-    console.log('Searching for your song...' + song) ;
+    console.log('Searching for your song...' + song);
     if (song === null) {
-        song = 'The Sign'
+        song = 'The Sign';
     } else {
         song = input;
     }
@@ -100,7 +91,7 @@ const songInfo = function (song) {
 const movieInfo = function (movie) {
     console.log("Searching for your movie ...." + movie);
     if (movie === null) {
-        movie = 'Mr. Nobody'
+        movie = 'Mr. Nobody';
     } else {
         movie = input;
     }
@@ -108,9 +99,7 @@ const movieInfo = function (movie) {
 
     axios.get(URL).then(function (response) {
         const jsonData = response.data;
-
         //console.log(JSON.stringify(jsonData, null, 2)); Console log response for debugging 
-
         console.log("Title of the Movie: " + jsonData.Title);
         console.log("Release Year: " + jsonData.Year);
         console.log("IMDB Rating: " + jsonData.imdbRating);
