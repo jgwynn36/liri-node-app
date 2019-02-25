@@ -13,8 +13,14 @@ In this assignment, you will make LIRI. LIRI is like iPhone's SIRI. However, whi
 
 ##Screen shots
 
-![Band In Town Screenshot](/ScreenShot_Band_In_Town.png)
-Format: ![ScreenShot_Band_In_Town](url)
+![Band In Town Screenshot](./ScreenShot_Band_In_Town.png)
+Format: ![./ScreenShot_Band_In_Town.png](url)
+
+![Spotify Screenshot](./ScreenShot_Spotify.png)
+Format: ![./ScreenShot_Spotify.png](url)
+
+![OMBD Screenshot](./ScreenShot_OMBD.png)
+Format: ![./ScreenShot_OMBD.png](url)
 
 * .gitignore file 
 node_modules
