@@ -30,8 +30,11 @@ const liri = function (type, input) {
         case "movieInfo":
             movieInfo(input);
             break;
+        case "doSomething":
+            doSomething();
+            break;
         default:
-            console.log("Sorry something went wrong with your search!!");
+            console.log("Please enter a command and input to begin your search!!");
     }
 };
 
@@ -115,6 +118,31 @@ const movieInfo = function (movie) {
         fs.appendFile('log.txt', movieData, function (error) {
             if (error) throw error;
         });
+    });
+}
+
+const doSomething = function () {
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log(error);
+        } else {
+            //splits whatever is in random.txt into strings.
+            let theSplit = data.split(",");
+            console.log (theSplit);
+
+            if (theSplit[0] === "songInfo") {
+                let song = theSplit[1]; 
+                songInfo(song);
+            } else if (theSplit[0] === "movieInfo") {
+                let movie = theSplit[0]; 
+                movieInfo(movie);
+            } else if (theSplit[0] === "concertList") {
+                let input = theSplit[1]; 
+                concertList(input);
+            } else {
+                console.log("Error: There's a problem with this call.")
+            }
+        }
     });
 }
 

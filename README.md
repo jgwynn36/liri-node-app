@@ -11,15 +11,15 @@ In this assignment, you will make LIRI. LIRI is like iPhone's SIRI. However, whi
 *Moment
 *DotEnv
 
-##Screen shots
+## Screen shots
 
 ### Band In Town 
 ![Band In Town Screenshot](./ScreenShot_Band_In_Town.png)
 
-## Spotify API 
+### Spotify API 
 ![Spotify Screenshot](./ScreenShot_Spotify.png)
 
-## OMBD API 
+### OMBD API 
 ![OMBD Screenshot](./ScreenShot_OMBD.png)
 
 * .gitignore file 
