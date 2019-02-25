@@ -12,8 +12,9 @@ In this assignment, you will make LIRI. LIRI is like iPhone's SIRI. However, whi
 *DotEnv
 
 ##Screen shots
-![Band In Town Screenshot](/images/logo.png)
-Format: ![Alt Text](url)
+
+![Band In Town Screenshot](/ScreenShot_Band_In_Town.png)
+Format: ![ScreenShot_Band_In_Town](url)
 
 * .gitignore file 
 node_modules
